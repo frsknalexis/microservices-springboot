@@ -2,11 +2,14 @@ package com.dev.boot.ws.app.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +25,13 @@ import com.dev.boot.ws.app.service.ProductoService;
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoRestController {
+	
+	@Autowired
+	private Environment env;
 
+	@Value("${server.port}")
+	private Integer port;
+	
 	@Autowired
 	@Qualifier("productoService")
 	private ProductoService productoService;
@@ -53,7 +62,14 @@ public class ProductoRestController {
 			if(productos.isEmpty()) {
 				return new ResponseEntity<List<Producto>>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+			
+			List<Producto> productosReturn = productos.stream().map(producto -> {
+				//producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+				producto.setPort(port);
+				return producto;
+			}).collect(Collectors.toList());
+			
+			return new ResponseEntity<List<Producto>>(productosReturn, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<Producto>>(HttpStatus.BAD_REQUEST);
@@ -75,6 +91,8 @@ public class ProductoRestController {
 			else {
 				return new ResponseEntity<Producto>(HttpStatus.NOT_FOUND);
 			}
+			//producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+			producto.setPort(port);
 			return new ResponseEntity<Producto>(producto, HttpStatus.OK);
 		}
 		catch(Exception e) {

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,6 +36,9 @@ public class Producto implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
+	
+	@Transient
+	private Integer port;
 
 	public Producto() {
 		
@@ -70,5 +74,13 @@ public class Producto implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public Integer getPort() {
+		return port;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 }

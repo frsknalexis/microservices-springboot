@@ -17,6 +17,8 @@ public class ProductoDTO implements Serializable {
 	private Double precio;
 	
 	private Date createdAt;
+	
+	private Integer port;
 
 	public ProductoDTO() {
 		
@@ -52,5 +54,13 @@ public class ProductoDTO implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public Integer getPort() {
+		return port;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 }
