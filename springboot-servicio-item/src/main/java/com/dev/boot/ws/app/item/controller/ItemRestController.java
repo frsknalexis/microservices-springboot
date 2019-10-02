@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.boot.ws.app.item.model.ItemDTO;
+import com.dev.boot.ws.app.item.model.ProductoDTO;
 import com.dev.boot.ws.app.item.service.ItemService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 @RequestMapping("/api/v1/item")
@@ -38,6 +40,7 @@ public class ItemRestController {
 		}
 	}
 	
+	@HystrixCommand(fallbackMethod = "metodoAlternativo")
 	@GetMapping("/getOne/{id}/cantidad/{cantidad}")
 	public ResponseEntity<ItemDTO> getOne(@PathVariable(value = "id") Long id, @PathVariable(value = "cantidad") Integer cantidad) {
 		
@@ -58,5 +61,17 @@ public class ItemRestController {
 		catch(Exception e) {
 			return new ResponseEntity<ItemDTO>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	public ResponseEntity<ItemDTO> metodoAlternativo(Long id, Integer cantidad) {
+		ItemDTO item = new ItemDTO();
+		ProductoDTO producto = new ProductoDTO();
+		
+		item.setCantidad(cantidad);
+		producto.setId(id);
+		producto.setNombre("Camara Sony");
+		producto.setPrecio(500.00);
+		item.setProducto(producto);
+		return new ResponseEntity<ItemDTO>(item, HttpStatus.OK);
 	}
 }

@@ -93,6 +93,15 @@ public class ProductoRestController {
 			}
 			//producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
 			producto.setPort(port);
+			
+			/*
+			try {
+				Thread.sleep(2000L);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			*/
 			return new ResponseEntity<Producto>(producto, HttpStatus.OK);
 		}
 		catch(Exception e) {
