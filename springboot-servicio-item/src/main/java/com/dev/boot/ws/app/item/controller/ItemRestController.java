@@ -1,9 +1,14 @@
 package com.dev.boot.ws.app.item.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +25,14 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @RequestMapping("/api/v1/item")
 public class ItemRestController {
 
+	private static Logger logger = LoggerFactory.getLogger(ItemRestController.class);
+	
 	@Autowired
 	@Qualifier("itemServiceFeign")
 	private ItemService itemService;
+	
+	@Value("${configuracion.texto}")
+	private String texto;
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<ItemDTO>> findAll() {
@@ -73,5 +83,15 @@ public class ItemRestController {
 		producto.setPrecio(500.00);
 		item.setProducto(producto);
 		return new ResponseEntity<ItemDTO>(item, HttpStatus.OK);
+	}
+	
+	@GetMapping("/obtener-config")
+	public ResponseEntity<?> obtenerConfiguracion(@Value("${server.port}") String puerto) {
+		
+		logger.info(texto);
+		Map<String, String> json = new HashMap<String, String>();
+		json.put("texto", texto);
+		json.put("puerto", puerto);
+		return new ResponseEntity<Map<String, String>>(json, HttpStatus.OK);
 	}
 }
