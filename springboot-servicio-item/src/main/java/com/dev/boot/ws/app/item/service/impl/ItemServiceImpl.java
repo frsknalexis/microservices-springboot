@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,4 +52,36 @@ public class ItemServiceImpl implements ItemService {
 		return itemDTO;
 	}
 
+	@Override
+	public ProductoDTO save(ProductoDTO productoDTO) {
+		
+		HttpEntity<ProductoDTO> body = new HttpEntity<ProductoDTO>(productoDTO);
+	 	ResponseEntity<ProductoDTO> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "saveProducto", HttpMethod.POST, 
+	 			body, ProductoDTO.class);
+		ProductoDTO productoReturn = response.getBody();
+	 	return productoReturn;
+	}
+
+	@Override
+	public ProductoDTO update(ProductoDTO productoDTO, Long id) {
+		
+		Map<String, String> pathVariables = new HashMap<String, String>();
+		pathVariables.put("id", id.toString());
+		
+		HttpEntity<ProductoDTO> body = new HttpEntity<ProductoDTO>(productoDTO);
+		ResponseEntity<ProductoDTO> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "editar/{id}", HttpMethod.PUT, 
+				body, ProductoDTO.class, pathVariables);
+		
+		ProductoDTO productoReturn = response.getBody();
+		return productoReturn;
+	}
+
+	@Override
+	public void delete(Long id) {
+		
+		Map<String, String> pathVariables = new HashMap<String, String>();
+		pathVariables.put("id", id.toString());
+		
+		restTemplate.delete(URL_SERVICIO_PRODUCTOS + "eliminar/{id}", pathVariables);
+	}
 }

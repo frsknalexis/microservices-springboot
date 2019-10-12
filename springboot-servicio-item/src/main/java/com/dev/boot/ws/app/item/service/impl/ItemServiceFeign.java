@@ -32,4 +32,24 @@ public class ItemServiceFeign implements ItemService {
 		ItemDTO itemDTO = new ItemDTO(producto, cantidad);
 		return itemDTO;
 	}
+
+	@Override
+	public ProductoDTO save(ProductoDTO productoDTO) {
+		
+		ProductoDTO productoDTOReturn = productoClienteFeignRest.saveProducto(productoDTO); 
+		return productoDTOReturn;
+	}
+
+	@Override
+	public ProductoDTO update(ProductoDTO productoDTO, Long id) {
+		
+		ProductoDTO productoReturn = productoClienteFeignRest.editarProducto(productoDTO, id);
+		return productoReturn;
+	}
+
+	@Override
+	public void delete(Long id) {
+		
+		productoClienteFeignRest.eliminar(id);
+	}
 }

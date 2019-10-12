@@ -11,4 +11,6 @@ public interface ProductoService {
 	Producto findById(Long id);
 	
 	Producto saveProducto(Producto producto);
+	
+	void deleteById(Long id);
 }

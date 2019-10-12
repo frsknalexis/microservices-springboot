@@ -38,9 +38,16 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
+	@Transactional
 	public Producto saveProducto(Producto producto) {
 		
 		Producto productoReturn = productoRepository.save(producto);
 		return productoReturn;
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		productoRepository.deleteById(id);
 	}
 }
