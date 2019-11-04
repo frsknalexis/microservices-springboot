@@ -13,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.dev.boot.ws.app.commons.model.Producto;
 import com.dev.boot.ws.app.item.model.ItemDTO;
-import com.dev.boot.ws.app.item.model.ProductoDTO;
 import com.dev.boot.ws.app.item.service.ItemService;
 
 @Service("itemService")
@@ -30,8 +30,8 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<ItemDTO> findAll() {
 		
-		List<ProductoDTO> productos = new ArrayList<ProductoDTO>();
-		ProductoDTO[] productosReturn = restTemplate.getForObject(URL_SERVICIO_PRODUCTOS + "listar", ProductoDTO[].class);
+		List<Producto> productos = new ArrayList<Producto>();
+		Producto[] productosReturn = restTemplate.getForObject(URL_SERVICIO_PRODUCTOS + "listar", Producto[].class);
 		
 		for (int i = 0; i < productosReturn.length; i++) {
 			productos.add(productosReturn[i]);
@@ -47,32 +47,32 @@ public class ItemServiceImpl implements ItemService {
 		Map<String, String> pathVariables = new HashMap<String, String>();
 		pathVariables.put("id", id.toString());
 		
-		ProductoDTO producto = restTemplate.getForObject(URL_SERVICIO_PRODUCTOS + "getOne/{id}", ProductoDTO.class, pathVariables);
+		Producto producto = restTemplate.getForObject(URL_SERVICIO_PRODUCTOS + "getOne/{id}", Producto.class, pathVariables);
 		ItemDTO itemDTO = new ItemDTO(producto, cantidad);
 		return itemDTO;
 	}
 
 	@Override
-	public ProductoDTO save(ProductoDTO productoDTO) {
+	public Producto save(Producto producto) {
 		
-		HttpEntity<ProductoDTO> body = new HttpEntity<ProductoDTO>(productoDTO);
-	 	ResponseEntity<ProductoDTO> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "saveProducto", HttpMethod.POST, 
-	 			body, ProductoDTO.class);
-		ProductoDTO productoReturn = response.getBody();
+		HttpEntity<Producto> body = new HttpEntity<Producto>(producto);
+	 	ResponseEntity<Producto> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "saveProducto", HttpMethod.POST, 
+	 			body, Producto.class);
+		Producto productoReturn = response.getBody();
 	 	return productoReturn;
 	}
 
 	@Override
-	public ProductoDTO update(ProductoDTO productoDTO, Long id) {
+	public Producto update(Producto producto, Long id) {
 		
 		Map<String, String> pathVariables = new HashMap<String, String>();
 		pathVariables.put("id", id.toString());
 		
-		HttpEntity<ProductoDTO> body = new HttpEntity<ProductoDTO>(productoDTO);
-		ResponseEntity<ProductoDTO> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "editar/{id}", HttpMethod.PUT, 
-				body, ProductoDTO.class, pathVariables);
+		HttpEntity<Producto> body = new HttpEntity<Producto>(producto);
+		ResponseEntity<Producto> response = restTemplate.exchange(URL_SERVICIO_PRODUCTOS + "editar/{id}", HttpMethod.PUT, 
+				body, Producto.class, pathVariables);
 		
-		ProductoDTO productoReturn = response.getBody();
+		Producto productoReturn = response.getBody();
 		return productoReturn;
 	}
 

@@ -2,7 +2,7 @@ package com.dev.boot.ws.app.service;
 
 import java.util.List;
 
-import com.dev.boot.ws.app.entity.Producto;
+import com.dev.boot.ws.app.commons.model.Producto;
 
 public interface ProductoService {
 

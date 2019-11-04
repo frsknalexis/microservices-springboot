@@ -2,8 +2,8 @@ package com.dev.boot.ws.app.item.service;
 
 import java.util.List;
 
+import com.dev.boot.ws.app.commons.model.Producto;
 import com.dev.boot.ws.app.item.model.ItemDTO;
-import com.dev.boot.ws.app.item.model.ProductoDTO;
 
 public interface ItemService {
 
@@ -11,9 +11,9 @@ public interface ItemService {
 	
 	ItemDTO findById(Long id, Integer cantidad);
 	
-	ProductoDTO save(ProductoDTO productoDTO);
+	Producto save(Producto productoDTO);
 	
-	ProductoDTO update(ProductoDTO productoDTO, Long id);
+	Producto update(Producto productoDTO, Long id);
 	
 	public void delete(Long id);
 }

@@ -1,8 +1,10 @@
 package com.dev.boot.ws.app.item.model;
 
+import com.dev.boot.ws.app.commons.model.Producto;
+
 public class ItemDTO {
 
-	private ProductoDTO producto;
+	private Producto producto;
 	
 	private Integer cantidad;
 
@@ -10,17 +12,17 @@ public class ItemDTO {
 		
 	}
 	
-	public ItemDTO(ProductoDTO producto, Integer cantidad) {
+	public ItemDTO(Producto producto, Integer cantidad) {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
 	}
 
-	public ProductoDTO getProducto() {
+	public Producto getProducto() {
 		return producto;
 	}
 
-	public void setProducto(ProductoDTO producto) {
+	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
 

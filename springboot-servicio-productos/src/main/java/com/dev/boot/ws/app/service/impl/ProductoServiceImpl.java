@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dev.boot.ws.app.entity.Producto;
+import com.dev.boot.ws.app.commons.model.Producto;
 import com.dev.boot.ws.app.repository.ProductoRepository;
 import com.dev.boot.ws.app.service.ProductoService;
 

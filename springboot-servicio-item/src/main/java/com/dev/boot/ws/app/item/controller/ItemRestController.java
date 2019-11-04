@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dev.boot.ws.app.commons.model.Producto;
 import com.dev.boot.ws.app.item.model.ItemDTO;
-import com.dev.boot.ws.app.item.model.ProductoDTO;
 import com.dev.boot.ws.app.item.service.ItemService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
@@ -88,7 +88,7 @@ public class ItemRestController {
 	
 	public ResponseEntity<ItemDTO> metodoAlternativo(Long id, Integer cantidad) {
 		ItemDTO item = new ItemDTO();
-		ProductoDTO producto = new ProductoDTO();
+		Producto producto = new Producto();
 		
 		item.setCantidad(cantidad);
 		producto.setId(id);
@@ -115,13 +115,13 @@ public class ItemRestController {
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<ProductoDTO> saveProducto(@Valid @RequestBody ProductoDTO productoDTO) {
+	public ResponseEntity<Producto> saveProducto(@Valid @RequestBody Producto producto) {
 		
 		try {
 			
-			if(productoDTO != null) {
-				ProductoDTO productoReturn = itemService.save(productoDTO);
-				return new ResponseEntity<ProductoDTO>(productoReturn, HttpStatus.CREATED);
+			if(producto != null) {
+				Producto productoReturn = itemService.save(producto);
+				return new ResponseEntity<Producto>(productoReturn, HttpStatus.CREATED);
 			}
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch(Exception e) {
@@ -130,14 +130,14 @@ public class ItemRestController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<ProductoDTO> editarProducto(@Valid @RequestBody ProductoDTO productoDTO, 
+	public ResponseEntity<Producto> editarProducto(@Valid @RequestBody Producto producto, 
 			@PathVariable(value = "id") Long id) {
 		
 		try {
 			
-			if(productoDTO != null && id.intValue() > 0) {
-				ProductoDTO productoReturn = itemService.update(productoDTO, id);
-				return new ResponseEntity<ProductoDTO>(productoReturn, HttpStatus.OK);
+			if(producto != null && id.intValue() > 0) {
+				Producto productoReturn = itemService.update(producto, id);
+				return new ResponseEntity<Producto>(productoReturn, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch(Exception e) {

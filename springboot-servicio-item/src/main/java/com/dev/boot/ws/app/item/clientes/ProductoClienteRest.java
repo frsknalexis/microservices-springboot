@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.dev.boot.ws.app.item.model.ProductoDTO;
+import com.dev.boot.ws.app.commons.model.Producto;
 
 @FeignClient(name = "servicio-productos")
 public interface ProductoClienteRest {
 
 	@GetMapping("/api/productos/listar")
-	List<ProductoDTO> findAll();
+	List<Producto> findAll();
 	
 	@GetMapping("/api/productos/getOne/{id}")
-	ProductoDTO getOneById(@PathVariable(value = "id") Long id);
+	Producto getOneById(@PathVariable(value = "id") Long id);
 	
 	@PostMapping("/api/productos/saveProducto")
-	ProductoDTO saveProducto(@Valid @RequestBody ProductoDTO productoDTO);
+	Producto saveProducto(@Valid @RequestBody Producto producto);
 	
 	@PutMapping("/api/productos/editar/{id}")
-	ProductoDTO editarProducto(@Valid @RequestBody ProductoDTO productoDTO, @PathVariable(value = "id") Long id);
+	Producto editarProducto(@Valid @RequestBody Producto producto, @PathVariable(value = "id") Long id);
 	
 	@DeleteMapping("/api/productos/eliminar/{id}")
 	void eliminar(@PathVariable(value = "id") Long id);
